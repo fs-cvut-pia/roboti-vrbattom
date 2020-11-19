@@ -2,7 +2,7 @@
 #include "Bludiste.h"
 
 // include na hlavicku vasi tridy
-#include "Robot.h" 
+#include "VasRobot.h" 
 
 #include <string>
 #include <sstream>
@@ -66,7 +66,7 @@ bool nacti_bludiste(std::string nazev_souboru, std::vector<Problem> & ukoly) {
 }
 
 int main() {
-
+  
     std::vector<Problem> ukoly;
     
     if (!nacti_bludiste("bludiste.dat",ukoly)) {
@@ -76,14 +76,18 @@ int main() {
     
     //ukoly.push_back(Problem{"Prazdny1",Bludiste(20,30,{15,27}),BludisteOdkryte(20,30,{15,27})});
     
-    Prohledavac* robot = new robot::robot(); // tady doplnite konstruktor tridy vaseho robota
+    Prohledavac* robot = new VasRobot(); // tady doplnite konstruktor tridy vaseho robota
     
     for (auto & ukol : ukoly) {
         std::cout << "Prohledavam bludiste " << ukol.nazev << ": \n";
         
         projdi(ukol.bludiste, *robot);
+
+	    ukol.bludiste.uloz_cestu(ukol.nazev + "_cesta.dat");
         
         projdi(ukol.bludiste_odkryte, *robot);
+	
+	    ukol.bludiste_odkryte.uloz_cestu(ukol.nazev + "_odkryte_cesta.dat");
     }
     
     delete robot;
